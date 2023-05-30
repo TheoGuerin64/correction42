@@ -4,7 +4,7 @@ Tired of constantly refreshing your browser to check if a correction is availabl
 
 ## Installation
 
-1. Clone this repository `git clone url`
+1. Clone this repository `git clone https://github.com/TheoGuerin64/correction42`
 2. Run `pip install -r requirements.txt`
 
 ## Usage
