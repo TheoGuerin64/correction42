@@ -25,13 +25,14 @@ class Slot:
     """A slot is a time interval where a project can be corrected."""
 
     def __init__(self, data: Dict[str, str]) -> None:
+        self.id = data["id"]
         self.start = datetime.strptime(data["start"][:19], "%Y-%m-%dT%H:%M:%S")
         self.end = datetime.strptime(data["end"][:19], "%Y-%m-%dT%H:%M:%S")
 
     def __eq__(self, __value: object) -> bool:
         if not isinstance(__value, Slot):
             raise NotImplementedError()
-        return self.start == __value.start and self.end == __value.end
+        return self.id == __value.id
 
     def __str__(self) -> str:
         if self.start.date() == self.end.date() and self.start.date() == date.today():
