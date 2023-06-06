@@ -15,7 +15,7 @@ from notifypy import Notify
 
 SLEEP_TIME = 10
 URL = Template("https://projects.intra.42.fr/projects/$project_name/slots.json?team_id=$team_id&start=$start&end=$end")
-
+DIR = os.path.dirname(os.path.realpath(__file__))
 
 class SlotException(Exception):
     """Exception raised when a slot could not be retrieved."""
@@ -113,7 +113,7 @@ def send_new_slot_notification(slot: Slot) -> None:
     notification = Notify()
     notification.title = "New slot"
     notification.message = str(slot)
-    notification.icon = "icon.png"
+    notification.icon = DIR + "/icon.png"
     notification.send()
 
 
