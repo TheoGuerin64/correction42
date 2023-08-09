@@ -1,1 +1,2 @@
 notify-py>=0.3.42
+rich
