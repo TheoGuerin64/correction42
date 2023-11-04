@@ -104,9 +104,14 @@ def get_slots(config: dict) -> List[Slot]:
         timeout=10
     )
     content = response.json()
-    if response.status_code != 200:
-        raise SlotException(f"Could not get slots ({content['error']})")
-    return [Slot(slot) for slot in content]
+
+    if response.status_code == 200:
+        return [Slot(slot) for slot in content]
+    if response.status_code == 404:
+        raise SlotException("Could not get slots (Project not found)")
+    if response.status_code == 401:
+        raise SlotException("Could not get slots (Invalid session token)")
+    raise SlotException("Could not get slots (Unknown error)")
 
 
 def send_new_slot_notification(slot: Slot) -> None:
