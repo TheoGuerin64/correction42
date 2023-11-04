@@ -1,21 +1,22 @@
 """This script will notify you when a new slot is available for correction on the 42 intra."""
 
-from typing import List, Dict, Optional
+import json
+import os
+import platform
+from datetime import date, datetime, timedelta
 from string import Template
 from time import sleep
-from datetime import date, timedelta, datetime
-import json
-import platform
-import os
+from typing import Dict, List, Optional
 
-from rich.console import Console
-from rich.prompt import Prompt, IntPrompt
 import requests
 from notifypy import Notify
+from rich.console import Console
+from rich.prompt import IntPrompt, Prompt
 
 SLEEP_TIME = 10
 URL = Template("https://projects.intra.42.fr/projects/$project_name/slots.json?team_id=$team_id&start=$start&end=$end")
 DIR = os.path.dirname(os.path.realpath(__file__))
+
 
 class SlotException(Exception):
     """Exception raised when a slot could not be retrieved."""
@@ -139,12 +140,12 @@ def main() -> None:
 
             for new_slot in new_slots:
                 if new_slot not in slots:
-                    console.print(f"New slot: {new_slot}", style="bold green")
+                    console.print(f"{datetime.now()} - New slot: {new_slot}", style="bold green")
                     send_new_slot_notification(new_slot)
                     slots.append(new_slot)
             for old_slot in slots.copy():
                 if old_slot not in new_slots:
-                    console.print(f"Slot removed: {old_slot}", style="bold red")
+                    console.print(f"{datetime.now()} - Slot removed: {old_slot}", style="bold red")
                     slots.remove(old_slot)
 
             sleep(SLEEP_TIME)
